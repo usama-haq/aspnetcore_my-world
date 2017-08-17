@@ -1,20 +1,17 @@
 ﻿(function () {
-    var e = jQuery("#username");
-    e.text("Sammy");
+    var sidebarAndWrapper = jQuery("#sidebar,#wrapper");
 
-    var main = jQuery("#main");
+    var sidebarToggleButton = jQuery("#sideBarToggleButton");
 
-    main.on("mouseenter", function () {
-        main.style = "background-color: #888;";
+    sidebarToggleButton.on("click", function () {
+        sidebarAndWrapper.toggleClass("hide-sidebar");
+
+        if (sidebarAndWrapper.hasClass("hide-sidebar")) {
+            jQuery(this).text("Show Sidebar");
+        }
+        else {
+            jQuery(this).text("Hide Sidebar");
+        }
     });
 
-    main.on("mouseleave", function () {
-        main.style = "";
-    });
-
-    var menuitems = jQuery("ul.menu li a");
-    menuitems.on("click", function () {
-        var me = jQuery(this);
-        alert(me.text());
-    });
 })();
