@@ -1,6 +1,7 @@
 ﻿body {
     font-family: 'Segoe UI', sans-serif;
     font-size: 14px;
+    margin: 0;
 }
 
 label {
@@ -14,15 +15,38 @@ input[type=text], input[type=password], textarea {
 
 #main {
     background-color: #eee;
+    padding: 4px;
+    margin: 0;
 }
 
 #footer {
     background-color: #222;
     color: #eee;
+    padding: 8px 4px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+#sidebar {
+    background: #2a2c36;
+    color: #eee;
+    position: fixed;
+    width: 250px;
+    overflow: hidden;
+    left: 0;
+    height: 100%;
+    margin: 0;
+}
+
+#wrapper {
+    margin: 0 0 0 250px;
 }
 
 .headshot {
     max-width: 50px;
+    border: 1px solid #222;
+    padding: 3px;
 }
 
 .menu {
@@ -33,6 +57,6 @@ input[type=text], input[type=password], textarea {
         list-style-type: none;
     }
 
-    .menu li.active {
-        font-weight: bold;
-    }
+        .menu li.active {
+            font-weight: bold;
+        }
