@@ -19,19 +19,24 @@ namespace MyWorld
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // !!! Order is important !!!
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+
             loggerFactory.AddConsole();
+
+            app.UseDefaultFiles(); // Set default files to serve by StaticFiles
+            app.UseStaticFiles();   // Server static files from wwwroot directory
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Hello World!");
-            });
+            //app.Run(async (context) =>
+            //{
+            //    await context.Response.WriteAsync("Hello World!");
+            //});
         }
     }
 }
