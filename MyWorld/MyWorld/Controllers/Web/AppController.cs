@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyWorld.ViewModels;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,7 +15,15 @@ namespace MyWorld.Controllers.Web
 
         // GET: /<controller>/
         public IActionResult Contact()
-            
+
+        {
+            return View();
+        }
+
+        // POST: /<controller>/
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Contact(ContactViewModel model)
         {
             return View();
         }
