@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MyWorld.Models;
 
 namespace MyWorld.Controllers.API
 {
+    [Route("api/trips")]
     public class TripsController : Controller
     {
         private IWorldRepository _repo;
@@ -16,10 +13,16 @@ namespace MyWorld.Controllers.API
             _repo = repo;
         }
 
-        [HttpGet("api/trips")]
+        [HttpGet("")]
         public IActionResult Get()
         {
             return Ok(_repo.GetAllTrips());
+        }
+
+        [HttpPost("")]
+        public IActionResult Post([FromBody] Trip newTrip)
+        {
+            return Ok(newTrip);
         }
     }
 }
