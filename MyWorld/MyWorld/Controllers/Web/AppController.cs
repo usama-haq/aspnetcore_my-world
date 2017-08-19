@@ -16,7 +16,6 @@ namespace MyWorld.Controllers.Web
         public IActionResult Contact()
             
         {
-            throw new System.Exception("SHIT");
             return View();
         }
 
