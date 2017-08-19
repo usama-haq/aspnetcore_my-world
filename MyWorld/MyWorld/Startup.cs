@@ -30,6 +30,7 @@ namespace MyWorld
             services.AddSingleton(_config);
 
             services.AddDbContext<WorldContext>();
+            services.AddScoped<IWorldRepository, WorldRepository>();
             services.AddTransient<WorldContextSeedData>();
             services.AddMvc();
         }
