@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyWorld.Models;
+using MyWorld.ViewModels;
 
 namespace MyWorld.Controllers.API
 {
@@ -13,16 +14,23 @@ namespace MyWorld.Controllers.API
             _repo = repo;
         }
 
-        [HttpGet("")]
+        [HttpGet]
         public IActionResult Get()
         {
             return Ok(_repo.GetAllTrips());
         }
 
-        [HttpPost("")]
-        public IActionResult Post([FromBody] Trip newTrip)
+        [HttpPost]
+        public IActionResult Post([FromBody] TripViewModel newTrip)
         {
-            return Ok(newTrip);
+            if (ModelState.IsValid)
+            {
+
+                // TODO: Save to the Database
+
+                return Created($"api/trips/{newTrip.Name}", newTrip);
+            }
+            return BadRequest(ModelState.ToString());
         }
     }
 }
