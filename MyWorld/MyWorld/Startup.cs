@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MyWorld.Models;
 using MyWorld.Services;
+using Newtonsoft.Json.Serialization;
 
 namespace MyWorld
 {
@@ -34,7 +35,11 @@ namespace MyWorld
             services.AddTransient<WorldContextSeedData>();
 
             services.AddLogging();
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(config =>
+                {
+                    config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

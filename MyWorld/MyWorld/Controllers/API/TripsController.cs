@@ -9,10 +9,17 @@ namespace MyWorld.Controllers.API
 {
     public class TripsController : Controller
     {
+        private IWorldRepository _repo;
+
+        public TripsController(IWorldRepository repo)
+        {
+            _repo = repo;
+        }
+
         [HttpGet("api/trips")]
         public IActionResult Get()
         {
-            return Ok(new Trip() { Name = "My Trip" });
+            return Ok(_repo.GetAllTrips());
         }
     }
 }
