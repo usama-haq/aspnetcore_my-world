@@ -30,12 +30,13 @@ namespace MyWorld
             services.AddSingleton(_config);
 
             services.AddDbContext<WorldContext>();
+            services.AddTransient<WorldContextSeedData>();
             services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         // !!! Order is important !!!
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, WorldContextSeedData seeder)
         {
             loggerFactory.AddConsole();
 
@@ -53,6 +54,8 @@ namespace MyWorld
                     defaults: new { controller = "App", action = "Index" }
                     );
             });
+
+            seeder.EnsureSeedData().Wait();
         }
     }
 }
