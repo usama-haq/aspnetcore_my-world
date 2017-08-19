@@ -2,9 +2,11 @@
   "name": "asp.net",
   "private": true,
   "dependencies": {
-    "underscore": "1.8.3",
+    "bootstrap": "3.3.7",
+    "font-awsome": "4.7.0",
     "jquery": "3.2.1",
     "jquery-validation": "1.17.0",
-    "jquery-validation-unobtrusive": "3.2.6"
+    "jquery-validation-unobtrusive": "3.2.6",
+    "underscore": "1.8.3"
   }
 }
