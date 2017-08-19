@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using MyWorld.Services;
 using MyWorld.ViewModels;
 
@@ -9,10 +10,12 @@ namespace MyWorld.Controllers.Web
     public class AppController : Controller
     {
         private IMailService _mailService;
+        private IConfigurationRoot _config;
 
-        public AppController(IMailService mailService)
+        public AppController(IMailService mailService, IConfigurationRoot config)
         {
             _mailService = mailService;
+            _config = config;
         }
 
         // GET: /<controller>/
@@ -30,10 +33,21 @@ namespace MyWorld.Controllers.Web
 
         // POST: /<controller>/
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Contact(ContactViewModel model)
         {
-            _mailService.SendMail("usamahaq.5533@gmail.com", model.Email, model.Name, model.Message);
+            if (model.Email.Contains("aol.com"))
+            {
+                ModelState.AddModelError("", "We don't support AOL addresses.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                _mailService.SendMail(_config["MailSettings:ToAddress"], model.Email, model.Name, model.Message);
+
+                ModelState.Clear();
+
+                ViewBag.Message = "Message Sent!";
+            }
             return View();
         }
 
