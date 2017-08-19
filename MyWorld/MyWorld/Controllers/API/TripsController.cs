@@ -5,6 +5,7 @@ using MyWorld.Models;
 using MyWorld.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MyWorld.Controllers.API
 {
@@ -36,17 +37,21 @@ namespace MyWorld.Controllers.API
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] TripViewModel theTrip)
+        public async Task<IActionResult> Post([FromBody] TripViewModel theTrip)
         {
             if (ModelState.IsValid)
             {
                 // TODO: Save to the Database
 
                 var newtrip = Mapper.Map<Trip>(theTrip);
+                _repo.AddTrip(newtrip);
 
-                return Created($"api/trips/{newtrip.Id}", Mapper.Map<TripViewModel>(newtrip));
+                if (await _repo.SaveChangesAsync())
+                {
+                    return Created($"api/trips/{theTrip.Name}", Mapper.Map<TripViewModel>(newtrip));
+                }
             }
-            return BadRequest(ModelState);
+            return BadRequest("Failed to Save the trip");
         }
     }
 }
