@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Content Include="wwwroot\css\default.css" />
-    <Content Include="wwwroot\index.html" />
     <Content Include="wwwroot\js\default.js" />
   </ItemGroup>
   <ItemGroup>

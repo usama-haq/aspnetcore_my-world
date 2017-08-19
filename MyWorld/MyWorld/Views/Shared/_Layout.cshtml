@@ -1,9 +1,10 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>index</title>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="css/default.css" />
+    <title>@ViewBag.Title - My World</title>
 </head>
 <body>
 
@@ -22,24 +23,12 @@
     <div id="wrapper">
         <div id="main">
             <!-- =============================== Main Content: Begin =============================== -->
-            <button id="sideBarToggleButton">Hide Sidebar</button>
-            <h1> Hello! form HTML file.... </h1>
-            <p>This will be fun website woon!</p>
-
-            <form>
-                <div>
-                    <label>Date</label>
-                    <input type="text" />
-                </div>
-                <div>
-                    <label>Location</label>
-                    <input type="text" />
-                </div>
-                <div>
-                    <input type="submit" value="Add" />
-                </div>
-            </form>
-
+            <div>
+                <button id="sideBarToggleButton">Hide Sidebar</button>
+            </div>
+            <div>
+                @RenderBody()
+            </div>
             <!-- =============================== Main Content: End =============================== -->
         </div>
 
