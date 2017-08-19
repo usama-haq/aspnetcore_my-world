@@ -16,7 +16,7 @@
         <img src="~/img/usama-haq-foto.64x64.jpg" alt="headshot" class="headshot" />
         <span id="username">Usama Haq</span>
 
-        <ul class="menu">
+        <ul class="nav">
             <li class="active"><a asp-controller="App" asp-action="Index">Home</a></li>
             <li><a asp-controller="App" asp-action="About">About</a></li>
             <li><a asp-controller="App" asp-action="Contact">Contact</a></li>
@@ -24,24 +24,50 @@
         <!-- =============================== SideBar: End =============================== -->
     </div>
     <div id="wrapper">
-        <div id="main">
-            <!-- =============================== Main Content: Begin =============================== -->
-            <div>
-                <button id="sideBarToggleButton" class="btn btn-primary btn-sm">
-                    <i class="fa fa-angle-left"></i>
-                </button>
+
+        <nav class="navbar navbar-inverse">
+
+            <div class="container-fluid">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button id="sideBarToggleButton" class="btn btn-primary btn-sm">
+                            <i class="fa fa-angle-left"></i>
+                        </button>
+                    </li>
+                </ul>
+                <a asp-controller="App" asp-action="Index" class="navbar-brand">My World</a>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" class="btn btn-sm btn-info">
+                            <i class="fa fa-save"></i>Save
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="btn btn-sm btn-info">
+                            <i class="fa fa-print"></i>Print
+                        </a>
+                    </li>
+                </ul>
             </div>
+        </nav>
+
+        <div id="main" class="container-fluid">
+            <!-- =============================== Main Content: Begin =============================== -->
             <div>
                 @RenderBody()
             </div>
             <!-- =============================== Main Content: End =============================== -->
         </div>
 
-        <footer id="footer">
+        <footer id="footer" class="container-fluid">
             <!-- =============================== Footer: Begin =============================== -->
-            <p class="text-primary">
-                &copy; 2017 The World Ltd.
-            </p>
+            <div class="navbar navbar-inverse navbar-fixed-bottom" >
+                <h4 class="text-center text-info">
+                    &copy; 2017 The World Ltd.
+                </h4>
+            </div>
+
             <!-- =============================== Footer: End =============================== -->
         </footer>
     </div>
