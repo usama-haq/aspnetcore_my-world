@@ -20,6 +20,11 @@ namespace MyWorld
         {
             loggerFactory.AddConsole();
 
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
             app.UseStaticFiles();   // Server static files from wwwroot directory
             app.UseMvc(config =>
             {
