@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MyWorld.Models;
 using MyWorld.Services;
 
 namespace MyWorld
@@ -27,6 +28,8 @@ namespace MyWorld
         {
             services.AddScoped<IMailService, DebugMailService>();
             services.AddSingleton(_config);
+
+            services.AddDbContext<WorldContext>();
             services.AddMvc();
         }
 
