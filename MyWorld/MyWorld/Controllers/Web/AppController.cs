@@ -7,8 +7,6 @@ using MyWorld.Services;
 using MyWorld.ViewModels;
 using System;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace MyWorld.Controllers.Web
 {
     public class AppController : Controller
@@ -46,14 +44,21 @@ namespace MyWorld.Controllers.Web
         [Authorize]
         public IActionResult Trips()
         {
-            var trips = _repository.GetAllTrips();
-            return View(trips);
+            try
+            {
+                var data = _repository.GetAllTrips();
+                return View(data);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"-- Exception in Trips() of AppController: {ex.Message}");
+                return Redirect("/error");
+            }
         }
 
         // GET: /<controller>/
         [HttpGet]
         public IActionResult Contact()
-
         {
             return View();
         }

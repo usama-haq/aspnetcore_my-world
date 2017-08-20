@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -29,31 +30,35 @@ namespace MyWorld
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IMailService, DebugMailService>();
-            services.AddSingleton(_config);
+            services.AddMvc()
+               .AddJsonOptions(config =>
+               {
+                   config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+               });
+            services.AddLogging();
+            services.AddIdentity<WorldUser, IdentityRole>(
+                config =>
+                {
+                    config.User.RequireUniqueEmail = true;
+                    config.Password.RequiredLength = 8;
+                }
+                ).AddEntityFrameworkStores<WorldContext>();
 
             services.AddDbContext<WorldContext>();
+
             services.AddScoped<IWorldRepository, WorldRepository>();
-            services.AddTransient<GeoCoordsService>();
+            services.AddScoped<GeoCoordsService>();
             services.AddTransient<WorldContextSeedData>();
 
-            services.AddLogging();
-            services.AddMvc()
-                .AddJsonOptions(config =>
-                {
-                    config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                });
+            services.AddScoped<IMailService, DebugMailService>();
+            services.AddSingleton(_config);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         // !!! Order is important !!!
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, WorldContextSeedData seeder)
         {
-            Mapper.Initialize(config =>
-            {
-                config.CreateMap<TripViewModel, Trip>().ReverseMap();
-                config.CreateMap<StopViewModel, Stop>().ReverseMap();
-            });
+            loggerFactory.AddDebug(LogLevel.Warning);
 
             if (env.IsDevelopment())
             {
@@ -66,6 +71,15 @@ namespace MyWorld
             }
 
             app.UseStaticFiles();   // Server static files from wwwroot directory
+
+            app.UseIdentity();
+
+            Mapper.Initialize(config =>
+            {
+                config.CreateMap<TripViewModel, Trip>().ReverseMap();
+                config.CreateMap<StopViewModel, Stop>().ReverseMap();
+            });
+
             app.UseMvc(config =>
             {
                 config.MapRoute(
