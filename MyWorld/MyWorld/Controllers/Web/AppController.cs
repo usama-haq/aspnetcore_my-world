@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MyWorld.Models;
@@ -26,6 +27,7 @@ namespace MyWorld.Controllers.Web
         }
 
         // GET: /<controller>/
+        [HttpGet]
         public IActionResult Index()
         {
             try
@@ -40,7 +42,16 @@ namespace MyWorld.Controllers.Web
             }
         }
 
+        [HttpGet]
+        [Authorize]
+        public IActionResult Trips()
+        {
+            var trips = _repository.GetAllTrips();
+            return View(trips);
+        }
+
         // GET: /<controller>/
+        [HttpGet]
         public IActionResult Contact()
 
         {
@@ -68,6 +79,7 @@ namespace MyWorld.Controllers.Web
         }
 
         // GET: /<controller>/
+        [HttpGet]
         public IActionResult About()
         {
             return View();
