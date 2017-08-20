@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MyWorld.Models;
+using MyWorld.Services;
 using MyWorld.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,13 @@ namespace MyWorld.Controllers.API
     {
         private IWorldRepository _repository;
         private ILogger<StopsController> _logger;
+        private GeoCoordsService _geoCoords;
 
-        public StopsController(IWorldRepository repository, ILogger<StopsController> logger)
+        public StopsController(IWorldRepository repository, ILogger<StopsController> logger, GeoCoordsService geoCoords)
         {
             _repository = repository;
             _logger = logger;
+            _geoCoords = geoCoords;
         }
 
         [HttpGet]
@@ -47,7 +50,16 @@ namespace MyWorld.Controllers.API
                     var newStop = Mapper.Map<Stop>(vm);
 
                     // TODO: Lookup the Geocodes
-
+                    var result = await _geoCoords.GetCoordsAsync(newStop.Name);
+                    if (!result.Success)
+                    {
+                        _logger.LogError(result.Message);
+                    }
+                    else
+                    {
+                        newStop.Latitude = result.Latitude;
+                        newStop.Longitude = result.Longitude;
+                    }
                     // Save to the Database
                     _repository.AddStop(tripName, newStop);
 

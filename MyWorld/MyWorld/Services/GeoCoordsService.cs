@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -26,7 +27,9 @@ namespace MyWorld.Services
                 Message = "Failed to get coordinates"
             };
 
-            string apiKey = _config["Keys__BingKey"];
+            // TODO: Use Key from Config File
+            // string apiKey = _config["Keys:BingKey"];
+            string apiKey = Environment.GetEnvironmentVariable("Keys__BingKey");
             string encodedName = WebUtility.UrlEncode(name);
             string url = $"http://dev.virtualearth.net/REST/v1/Locations?q={encodedName}&key={apiKey}";
 
