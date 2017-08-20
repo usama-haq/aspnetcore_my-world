@@ -34,6 +34,7 @@ namespace MyWorld
 
             services.AddDbContext<WorldContext>();
             services.AddScoped<IWorldRepository, WorldRepository>();
+            services.AddTransient<GeoCoordsService>();
             services.AddTransient<WorldContextSeedData>();
 
             services.AddLogging();
@@ -48,7 +49,6 @@ namespace MyWorld
         // !!! Order is important !!!
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, WorldContextSeedData seeder)
         {
-
             Mapper.Initialize(config =>
             {
                 config.CreateMap<TripViewModel, Trip>().ReverseMap();

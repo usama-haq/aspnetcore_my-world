@@ -1,8 +1,11 @@
 {
-  "MailSettings": {
-    "ToAddress": "usamahaq.5533@gmail.com"
-  },
   "ConnectionStrings": {
     "SqlServerLocalDb": "Data Source=(localdb)\\MSSQLLocalDB;Database=MyWorldDb;Trusted_Connection=true;MultipleActiveResultSets=true;"
+  },
+  "Keys": {
+    "BingKey": "DontEverPutKeysInSourceControl"
+  },
+  "MailSettings": {
+    "ToAddress": "usamahaq.5533@gmail.com"
   }
 }
