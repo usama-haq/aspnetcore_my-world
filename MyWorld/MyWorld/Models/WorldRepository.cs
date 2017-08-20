@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace MyWorld.Models
 {
@@ -25,6 +27,11 @@ namespace MyWorld.Models
         {
             _logger.LogInformation("> World Respository Information: Getting All Trips from database.");
             return _context.Trips.ToList();
+        }
+
+        public Trip GetTripByName(string tripName)
+        {
+            return _context.Trips.Include(e => e.Stops).Where(t => t.Name.Equals(tripName)).FirstOrDefault();
         }
 
         public async Task<bool> SaveChangesAsync()
