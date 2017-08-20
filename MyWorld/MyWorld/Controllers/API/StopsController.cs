@@ -1,12 +1,12 @@
-﻿using System;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using MyWorld.Models;
+using MyWorld.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using MyWorld.Models;
-using Microsoft.Extensions.Logging;
-using MyWorld.ViewModels;
-using AutoMapper;
 
 namespace MyWorld.Controllers.API
 {
@@ -28,7 +28,7 @@ namespace MyWorld.Controllers.API
             try
             {
                 var trip = _repository.GetTripByName(tripName);
-                return Ok(Mapper.Map<IEnumerable<StopViewModel>>(trip.Stops.OrderBy(s=>s.Order).ToList()));
+                return Ok(Mapper.Map<IEnumerable<StopViewModel>>(trip.Stops.OrderBy(s => s.Order).ToList()));
             }
             catch (Exception ex)
             {
@@ -38,9 +38,30 @@ namespace MyWorld.Controllers.API
         }
 
         [HttpPost]
-        public IActionResult Post()
+        public async Task<IActionResult> Post(string tripName, [FromBody] StopViewModel vm)
         {
-            return Ok();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var newStop = Mapper.Map<Stop>(vm);
+
+                    // TODO: Lookup the Geocodes
+
+                    // Save to the Database
+                    _repository.AddStop(tripName, newStop);
+
+                    if (await _repository.SaveChangesAsync())
+                    {
+                        return Created($"/api/trips/{tripName}/stops/{newStop.Name}", Mapper.Map<StopViewModel>(newStop));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to save stops: {ex}");
+            }
+            return BadRequest("Failed to save Stops.");
         }
     }
 }

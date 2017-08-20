@@ -42,3 +42,7 @@
     border: 1px solid #222;
     padding: 3px;
 }
+
+#sideBarToggleButton {
+    margin: 6px;
+}
