@@ -47,7 +47,6 @@
     margin: 6px;
 }
 
-
 .fa {
     margin: 3px;
 }
@@ -55,4 +54,9 @@
 .btn {
     margin: 1px;
     margin-top: 4px;
+}
+
+.alert-danger {
+    padding-top: 12px;
+    padding-bottom: 5px;
 }
