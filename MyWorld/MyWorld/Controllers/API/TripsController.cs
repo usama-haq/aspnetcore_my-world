@@ -28,7 +28,7 @@ namespace MyWorld.Controllers.API
         {
             try
             {
-                var results = _repo.GetAllUserTripsWithStops(User.Identity.Name);
+                IEnumerable<Trip> results = _repo.GetAllUserTrips(User.Identity.Name);
                 return Ok(Mapper.Map<IEnumerable<TripViewModel>>(results));
             }
             catch (Exception ex)

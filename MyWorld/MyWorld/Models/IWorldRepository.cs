@@ -7,9 +7,7 @@ namespace MyWorld.Models
     {
         IEnumerable<Trip> GetAllTrips();
 
-        IEnumerable<Trip> GetAllTripsWithStops();
-
-        IEnumerable<Trip> GetAllUserTripsWithStops(string name);
+        IEnumerable<Trip> GetAllUserTrips(string name);
 
         Trip GetTripByName(string name, string userName);
 

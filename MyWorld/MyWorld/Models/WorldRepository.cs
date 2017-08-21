@@ -37,7 +37,7 @@ namespace MyWorld.Models
         {
             try
             {
-                return _context.Trips.OrderBy(t => t.Name).ToList();
+                return _context.Trips.ToList();
             }
             catch (Exception ex)
             {
@@ -46,33 +46,20 @@ namespace MyWorld.Models
             }
         }
 
-        public IEnumerable<Trip> GetAllTripsWithStops()
-        {
-            try
-            {
-                return _context.Trips.Include(t => t.Stops).OrderBy(t => t.Name).ToList();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("-- Exception: Couldn't get trips with stops from the database.", ex);
-                return null;
-            }
-        }
-
         public Trip GetTripByName(string tripName, string userName)
         {
-            return _context.Trips.Include(e => e.Stops)
-                .Where(t => t.Name.Equals(tripName) && t.UserName.Equals(userName))
+            return _context.Trips
+                .Include(t => t.Stops)
+                .Where(t => t.Name == tripName && t.UserName == userName)
                 .FirstOrDefault();
         }
 
-        public IEnumerable<Trip> GetAllUserTripsWithStops(string name)
+        public IEnumerable<Trip> GetAllUserTrips(string name)
         {
             try
             {
-                return _context.Trips.Include(t => t.Stops)
-                    .OrderBy(t => t.Name)
-                    .Where(t => t.UserName.Equals(name))
+                return _context.Trips
+                    .Where(t => t.UserName == name)
                     .ToList();
             }
             catch (Exception ex)
