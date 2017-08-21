@@ -10,6 +10,7 @@
     <Content Include="wwwroot\js\default.js" />
     <Content Include="wwwroot\js\simpleControls.js" />
     <Content Include="wwwroot\js\tripsController.js" />
+    <Content Include="wwwroot\views\tripsView.html" />
     <Content Include="wwwroot\views\waitCursor.html" />
   </ItemGroup>
   <ItemGroup>
