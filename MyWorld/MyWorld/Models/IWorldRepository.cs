@@ -11,11 +11,11 @@ namespace MyWorld.Models
 
         IEnumerable<Trip> GetAllUserTripsWithStops(string name);
 
-        Trip GetTripByName(string name);
+        Trip GetTripByName(string name, string userName);
 
         void AddTrip(Trip trip);
 
-        void AddStop(string tripName, Stop newStop);
+        void AddStop(string tripName, string userName, Stop newStop);
 
         Task<bool> SaveChangesAsync();
     }
