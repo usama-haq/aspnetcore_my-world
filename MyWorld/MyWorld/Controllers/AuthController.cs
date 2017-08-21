@@ -10,11 +10,19 @@ namespace MyWorld.Controllers
     {
         private SignInManager<WorldUser> _signInManager;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="signInManager"></param>
         public AuthController(SignInManager<WorldUser> signInManager)
         {
             _signInManager = signInManager;
         }
 
+        /// <summary>
+        /// Login Function
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Login()
         {
@@ -26,6 +34,12 @@ namespace MyWorld.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Logout Function
+        /// </summary>
+        /// <param name="vm"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel vm, string returnUrl)
         {
