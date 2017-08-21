@@ -1,6 +1,6 @@
 ﻿<div>
     <div class="col-md-12">
-        <a href="#/" class="btn btn-sm btn-default">
+        <a href="#!/" class="btn btn-sm btn-default">
             <i class="fa fa-angle-left"></i> Back
         </a>
     </div>
@@ -11,6 +11,23 @@
         <wait-cursor display-when="vm.isBusy"></wait-cursor>
 
         <div class="alert alert-danger" ng-show="vm.errorMessage">{{vm.errorMessage}}</div>
+
+        <form novalidate name="newStopForm">
+            <div class="form-group">
+                <label>Date</label>
+                <input id="arrival" name="arrival" class="form-control" ng-model="vm.newStop.arrival" required ng-pattern="/^(\d{2})\/(\d{2})\/(\d{4})$/" />
+                <span ng-show="newStopForm.arrival.$error.required" class="text-danger">Date is required.</span>
+                <span ng-show="newStopForm.arrival.$error.pattern" class="text-danger">Must be in format of MM/DD/YYYY</span>
+            </div>
+            <div class="form-group">
+                <label>Location</label>
+                <input id="name" name="name" class="form-control" ng-model="vm.newStop.name" required ng-minlength="5" ng-maxlength="100" />
+                <span ng-show="newStopForm.name.$error.required" class="text-danger">Location Name is required.</span>
+                <span ng-show="newStopForm.name.$error.minlength" class="text-danger">Location Name must be at least 5 characters.</span>
+                <span ng-show="newStopForm.name.$error.maxlength" class="text-danger">Location Name must be at most 100 characters.</span>
+            </div>
+            <div><input type="submit" value="Add" class="btn btn-success" ng-disabled="newStopForm.$invalid" /></div>
+        </form>
 
         <table class="table table-responsive table-striped">
             <thead>
@@ -26,18 +43,6 @@
                 </tr>
             </tbody>
         </table>
-
-        <form>
-            <div class="form-group">
-                <label>Date</label>
-                <input class="form-control" />
-            </div>
-            <div class="form-group">
-                <label>Location</label>
-                <input class="form-control" />
-            </div>
-            <div><input type="submit" value="Add" class="btn btn-success" /></div>
-        </form>
     </div>
 
     <div class="col-md-9">
