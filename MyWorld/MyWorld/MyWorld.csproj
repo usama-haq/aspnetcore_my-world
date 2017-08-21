@@ -6,7 +6,9 @@
 
   <ItemGroup>
     <Content Include="wwwroot\css\default.css" />
+    <Content Include="wwwroot\js\app-trips.js" />
     <Content Include="wwwroot\js\default.js" />
+    <Content Include="wwwroot\js\tripsController.js" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.1.1" />
