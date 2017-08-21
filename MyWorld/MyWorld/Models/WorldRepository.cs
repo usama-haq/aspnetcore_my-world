@@ -60,6 +60,7 @@ namespace MyWorld.Models
             {
                 return _context.Trips
                     .Where(t => t.UserName == name)
+                    .OrderBy(c => c.Name)
                     .ToList();
             }
             catch (Exception ex)
