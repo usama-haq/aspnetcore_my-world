@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,13 +35,49 @@ namespace MyWorld.Models
 
         public IEnumerable<Trip> GetAllTrips()
         {
-            _logger.LogInformation("> World Respository Information: Getting All Trips from database.");
-            return _context.Trips.ToList();
+            try
+            {
+                return _context.Trips.OrderBy(t => t.Name).ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("-- Exception: Couldn't get trips from the database.", ex);
+                return null;
+            }
+        }
+
+        public IEnumerable<Trip> GetAllTripsWithStops()
+        {
+            try
+            {
+                return _context.Trips.Include(t => t.Stops).OrderBy(t => t.Name).ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("-- Exception: Couldn't get trips with stops from the database.", ex);
+                return null;
+            }
         }
 
         public Trip GetTripByName(string tripName)
         {
             return _context.Trips.Include(e => e.Stops).Where(t => t.Name.Equals(tripName)).FirstOrDefault();
+        }
+
+        public IEnumerable<Trip> GetAllUserTripsWithStops(string name)
+        {
+            try
+            {
+                return _context.Trips.Include(t => t.Stops)
+                    .OrderBy(t => t.Name)
+                    .Where(t => t.UserName.Equals(name))
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("-- Exception: Couldn't get User trips with stops from database.", ex);
+                return null;
+            }
         }
 
         public async Task<bool> SaveChangesAsync()

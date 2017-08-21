@@ -28,7 +28,7 @@ namespace MyWorld.Controllers.API
         {
             try
             {
-                var results = _repo.GetAllTrips();
+                var results = _repo.GetAllUserTripsWithStops(User.Identity.Name);
                 return Ok(Mapper.Map<IEnumerable<TripViewModel>>(results));
             }
             catch (Exception ex)
@@ -43,9 +43,8 @@ namespace MyWorld.Controllers.API
         {
             if (ModelState.IsValid)
             {
-                // TODO: Save to the Database
-
                 var newtrip = Mapper.Map<Trip>(theTrip);
+                newtrip.UserName = User.Identity.Name;
                 _repo.AddTrip(newtrip);
 
                 if (await _repo.SaveChangesAsync())
