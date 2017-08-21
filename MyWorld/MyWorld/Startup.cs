@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -30,10 +31,16 @@ namespace MyWorld
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc()
-               .AddJsonOptions(config =>
+            services.AddMvc(config =>
+                {
+                    if (_env.IsProduction())
+                    {
+                        config.Filters.Add(new RequireHttpsAttribute());
+                    }
+                })
+            .AddJsonOptions(opt =>
                {
-                   config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                   opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                });
             services.AddLogging();
             services.AddIdentity<WorldUser, IdentityRole>(

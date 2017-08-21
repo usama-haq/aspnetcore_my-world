@@ -13,13 +13,21 @@
 
     <div id="sidebar">
         <!-- =============================== SideBar: Begin =============================== -->
-        <img src="~/img/usama-haq-foto.64x64.jpg" alt="headshot" class="headshot" />
-        <span id="username">Usama Haq</span>
-
+        @if (User.Identity.IsAuthenticated)
+        {
+            <img src="~/img/usama-haq-foto.64x64.jpg" alt="headshot" class="headshot" />
+            <span id="username">@User.Identity.Name</span>
+        }
         <ul class="nav">
             <li class="active"><a asp-controller="App" asp-action="Index">Home</a></li>
             <li><a asp-controller="App" asp-action="About">About</a></li>
             <li><a asp-controller="App" asp-action="Contact">Contact</a></li>
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li><a asp-controller="App" asp-action="Trips">Trips</a></li>
+                <li><a asp-controller="Auth" asp-action="Logout">Logout</a></li>
+            }
         </ul>
         <!-- =============================== SideBar: End =============================== -->
     </div>
@@ -62,7 +70,7 @@
 
         <footer id="footer" class="container-fluid">
             <!-- =============================== Footer: Begin =============================== -->
-            <div class="navbar navbar-inverse navbar-fixed-bottom" >
+            <div class="navbar navbar-inverse navbar-fixed-bottom">
                 <h4 class="text-center text-info">
                     &copy; 2017 The World Ltd.
                 </h4>

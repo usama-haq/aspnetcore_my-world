@@ -30,8 +30,8 @@ namespace MyWorld.Controllers.Web
         {
             try
             {
-                var data = _repository.GetAllTrips();
-                return View(data);
+                //var data = _repository.GetAllTrips();
+                return View();
             }
             catch (Exception ex)
             {
