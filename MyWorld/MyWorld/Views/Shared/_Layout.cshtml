@@ -84,6 +84,11 @@
     <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     @RenderSection("validationScripts", false)
     @RenderSection("angularScripts", false)
-    <script type="text/javascript" src="~/js/default.js"></script>
+    <environment names="Development">
+        <script type="text/javascript" src="~/js/default.js"></script>
+    </environment>
+    <environment names="Production,Staging">
+        <script type="text/javascript" src="~/lib/_app/default.js"></script>
+    </environment>
 </body>
 </html>
