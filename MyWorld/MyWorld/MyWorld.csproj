@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
+    <Authors>Usama Haq (usamahaq.5533@gmail.com)</Authors>
   </PropertyGroup>
 
   <ItemGroup>
@@ -34,5 +35,11 @@
   <ItemGroup>
     <None Include="Models\WorldContext.cs" />
   </ItemGroup>
-
+  <Target Name="MyPostBuildTarget" AfterTargets="Build">
+	<Exec Command="gulp minify" />
+  </Target>
+  <Target Name="MyPrePublishTarget" BeforeTargets="Publish">
+	<Exec Command="npm install" />
+	<Exec Command="bower install" />
+  </Target>  
 </Project>
