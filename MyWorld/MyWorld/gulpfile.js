@@ -1,4 +1,5 @@
-﻿var gulp = require('gulp');
+﻿/// <binding AfterBuild='minify' />
+var gulp = require('gulp');
 var uglify = require('gulp-uglify');
 
 gulp.task('minify', function () {
